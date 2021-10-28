@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-segundo-service-lb
+  namespace: oscar-mas
+  annotations:
+    metallb.universe.tf/address-pool: default
+spec:
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: mi-primer-deployment

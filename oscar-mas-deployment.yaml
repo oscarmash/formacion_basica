@@ -1,0 +1,21 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: mi-primer-deployment 
+  namespace: oscar-mas
+spec: 
+  selector: 
+    matchLabels: 
+      app: mi-primer-deployment 
+  replicas: 1 
+  template: 
+    metadata: 
+       labels: 
+          app: mi-primer-deployment 
+       name: nginx 
+    spec: 
+      containers: 
+      - name: mi-primer-deployment 
+        image: containous/whoami 
+        ports: 
+        - containerPort: 80 

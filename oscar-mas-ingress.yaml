@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1 
+kind: Ingress 
+metadata: 
+  name: mi-primer-ingress
+  namespace: oscar-mas
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec: 
+  rules: 
+    - host: www.dominio.cat 
+      http: 
+        paths: 
+          - path: / 
+            pathType: Prefix 
+            backend: 
+               service: 
+                  name: mi-segundo-service-lb 
+                  port: 
+                     number: 80 
