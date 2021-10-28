@@ -14,6 +14,6 @@ spec:
             pathType: Prefix 
             backend: 
                service: 
-                  name: mi-segundo-service-lb 
+                  name: mi-primer-service
                   port: 
                      number: 80 

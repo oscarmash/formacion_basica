@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-segundo-deployment
+  namespace: oscar-mas
+spec:
+  selector:
+    matchLabels:
+      app: mi-segundo-deployment
+  replicas: 3
+  template:
+    metadata:
+       labels:
+          app: mi-segundo-deployment
+       name: nginx
+    spec:
+      containers:
+      - name: mi-segundo-deployment
+        image: containous/whoami
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-tercer-service-lb
+  namespace: oscar-mas
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: mi-segundo-deployment
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mi-segundo-ingress
+  namespace: oscar-mas
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: www.dominio.es
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+               service:
+                  name: mi-tercer-service-lb
+                  port:
+                     number: 80
